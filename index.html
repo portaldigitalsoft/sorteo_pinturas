@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sorteo</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body { margin: 0; color: white; text-align: center; font-family: 'Segoe UI', sans-serif; background: #111; background-size: cover; background-attachment: fixed; }
+        .overlay { background: rgba(0,0,0,0.85); min-height: 100vh; padding-bottom: 60px; }
+        .container { max-width: 800px; margin: auto; padding: 20px; }
+        .banner { width: 100%; max-height: 300px; object-fit: cover; display: block; }
+        
+        .timer-wrap { 
+            display: none; 
+            background: #000; border: 2px solid #ff0000; 
+            padding: 15px; border-radius: 10px; margin: 20px auto; max-width: 300px;
+        }
+        .timer-label { font-size: 0.7rem; text-transform: uppercase; color: #ff0000; margin-bottom: 5px; }
+        #clock { font-family: monospace; font-size: 2.2rem; font-weight: bold; color: #ff4d4d; letter-spacing: 3px; }
+
+        h1 { font-family: 'Montserrat', sans-serif; font-size: 40px; color: #ff0000; margin: 20px 0; }
+        h2 { font-family: 'Montserrat', sans-serif; font-size: 22px; color: #ffff00; }
+        .bio { text-align: left; white-space: pre-wrap; line-height: 1.7; margin: 30px 0; }
+        .v-box { position: relative; padding-bottom: 56.25%; height: 0; border: 2px solid #ff0000; border-radius: 10px; overflow: hidden; margin: 20px 0; display: none; }
+        .v-box iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+        .btn-cta { display: inline-block; background: #ff0000; color: #000; padding: 20px 40px; text-decoration: none; font-weight: bold; border-radius: 5px; font-size: 1.2rem; box-shadow: 0 4px 15px #ff000066; }
+        footer { margin-top: 50px; opacity: 0.6; font-size: 0.9rem; }
+        footer a { color: #ff0000; text-decoration: none; font-weight: bold; }
+    </style>
+</head>
+<body>
+    
+    <div class="overlay">
+        <img src="https://i.ibb.co/tpFqHG7c/1779228821354.png" class="banner">
+        <div class="container">
+            <div class="timer-wrap">
+                <div class="timer-label">La oferta expira en:</div>
+                <div id="clock">00:00:00</div>
+            </div>
+            <h1>GRAN SORTEO DE PINTURAS  21/06/26</h1>
+            <h2>SOLO 100 NÚMEROS VALOS $8.000</h2>
+            <div class="bio">🔴 ¡BIENVENIDO AL GRAN SORTEO DÍA DEL PADRE! 🎁👨‍🎨
+Participá por 5 PREMIOS INCREÍBLES para renovar tu hogar con la calidad de siempre.
+🎰 Se sortea por la tómbola misionera matutina del 21/06/26.
+🎁 NUESTROS 5 PREMIOS EN JUEGO:
+🏆 1er PREMIO: El Combo Épico de Renovación (Látex Blanco 20L + Membrana 10L + Látex Color 10L + Sellador 4L + Enduido 4L). ¡Todo para transformar tu casa por completo!
+🥈 2do PREMIO: Máxima Cobertura Blanca (Látex Blanco de 20L). Ideal para techos y múltiples habitaciones.
+🥉 3er PREMIO: Tu Hogar a Tu Gusto (Látex Color de 10L). Tono a elección para darle personalidad a tus espacios.
+🏅 4to PREMIO: Renovación Clásica (Látex Blanco de 10L). La medida justa para renovar un living o habitación grande.
+🎖️ 5to PREMIO: El Toque Detallista (Látex Color de 4L). Tono a elección para destacar tus paredes principales.
+🔥 ¡MÁS DE $570.000 EN PRODUCTOS EN JUEGO!
+¡Una oportunidad única para agradecer tu confianza de siempre!
+📋 ¿Cómo participar?
+Elegí tu cuadro VERDE (Número disponible).
+Dale clic para enviarme un WhatsApp con tu número.
+Transferís al alias y ¡listo! Tu número pasa a ROJO (Vendido).
+💰 VALOR DEL BONO: $8.000 (Solo 100 números exclusivos para clientes).</div>
+            <div class="v-box"><iframe src="https://www.youtube.com/embed/" frameborder="0" allowfullscreen></iframe></div>
+            <img src="https://i.ibb.co/v6PNhvNp/3292bca772f0c8069f439f09d02ee7d0.jpg" style="width:100%; border-radius:10px; margin: 10px 0; display: block;">
+            <a href="https://drive.google.com/file/d/1AwgUGjAFTg5_nKdpYmA2m2bR-icMX7sD/view?usp=drivesdk" class="btn-cta">BASES Y CONDICIONES</a>
+            <footer>
+                Desarrollado por <a href="https://tarjeta.sitiovip.com/" target="_blank">Portal Digital</a>
+            </footer>
+        </div>
+    </div>
+    <script>
+        function startTimer() {
+            const hours = 24;
+            const storageKey = 'deadline_' + window.location.pathname;
+            let deadline = localStorage.getItem(storageKey);
+
+            if (!deadline) {
+                deadline = new Date().getTime() + (hours * 60 * 60 * 1000);
+                localStorage.setItem(storageKey, deadline);
+            }
+
+            const x = setInterval(function() {
+                const now = new Date().getTime();
+                const t = deadline - now;
+                if (t < 0) {
+                    clearInterval(x);
+                    document.getElementById("clock").innerHTML = "00:00:00";
+                    return;
+                }
+                const h = Math.floor((t % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const m = Math.floor((t % (1000 * 60 * 60)) / (1000 * 60));
+                const s = Math.floor((t % (1000 * 60)) / 1000);
+                document.getElementById("clock").innerHTML = 
+                    (h<10?'0':'')+h + ":" + (m<10?'0':'')+m + ":" + (s<10?'0':'')+s;
+            }, 1000);
+        }
+        if("no" === "si") startTimer();
+    </script>
+    <div id="contenedor-sorteo" style="max-width: 500px; margin: 30px auto; padding: 15px; background: #1a1a1a; border-radius: 12px; border: 1px solid #333; text-align: center;">
+    <h3 id="titulo-sorteo" style="color: #ffd700; margin-bottom: 15px;">Cargando números...</h3>
+    <div id="grid-sorteo" style="display: grid; grid-template-columns: repeat(10, 1fr); gap: 6px;"></div>
+</div>
+
+<script>
+    (async function() {
+        const WHATSAPP = "5493764369001";
+        const grid = document.getElementById("grid-sorteo");
+        const titulo = document.getElementById("titulo-sorteo");
+
+        // LISTA DE RESPALDO: Se usará SOLO si da error al cargar el archivo data.json localmente
+        let vendidos = []; 
+
+        try {
+            // Intenta buscar los datos reales en GitHub
+            const respuesta = await fetch('data.json', { cache: "no-store" });
+            if (respuesta.ok) {
+                const datos = await respuesta.json();
+                vendidos = datos.vendidos;
+                console.log("Datos cargados con éxito desde data.json");
+            } else {
+                console.warn("No se encontró data.json, usando lista de respaldo.");
+            }
+        } catch (error) {
+            // Si estás en tu PC local, caerá aquí por el bloqueo CORS, pero IGUAL cargará el tablero
+            console.log("Modo local detectado (CORS). Usando lista de respaldo.");
+        }
+
+        // Renderizado del tablero (Garantizado que funcione en PC y en Web)
+        titulo.innerText = "Elegí tu número:";
+        grid.innerHTML = ""; 
+
+        for (let i = 0; i < 100; i++) {
+            const n = String(i).padStart(2, '0');
+            const estaVendido = vendidos.includes(n);
+            const btn = document.createElement("div");
+            
+            Object.assign(btn.style, {
+                aspectRatio: "1/1",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                borderRadius: "5px",
+                fontSize: "14px",
+                fontWeight: "bold",
+                cursor: estaVendido ? "not-allowed" : "pointer",
+                backgroundColor: estaVendido ? "#ff4d4d44" : "#2ecc71",
+                color: estaVendido ? "#ff4d4d" : "#fff",
+                opacity: estaVendido ? "0.4" : "1",
+                transition: "0.2s"
+            });
+
+            btn.innerText = n;
+
+            if (!estaVendido) {
+                btn.onclick = () => {
+                    const msg = encodeURIComponent(`¡Hola! Quiero reservar el número ${n}. Mi nombre es: `);
+                    window.open(`https://wa.me/${WHATSAPP}?text=${msg}`, "_blank");
+                };
+            }
+            grid.appendChild(btn);
+        }
+    })();
+</script>
+
+</body>
+</html>
